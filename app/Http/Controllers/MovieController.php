@@ -43,9 +43,17 @@ class MovieController extends Controller
      * @param  \App\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, $movie_id)
     {
-        echo "Hello from update";
+        //echo "Hello from update";
+        $movie = Movie::find($movie_id);
+        $movie->name = $request->input('name');
+        $movie->description = $request->input('description');
+        $movie->genre = $request->input('genre');
+        $movie->year = $request->input('year');
+        $movie->duration = $request->input('duration');
+        $movie->save();
+        echo json_encode($movie);
     }
 
     /**
@@ -54,8 +62,10 @@ class MovieController extends Controller
      * @param  \App\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie)
+    public function destroy($movie_id)
     {
-        echo "Hello from destroy";
+        //echo "Hello from destroy";
+        $movie = Movie::find($movie_id);
+        $movie->delete();
     }
 }
